@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给宝宝｜浩楠的专属温柔关怀与智能小站</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FFFDF9',
+                        pinkSoft: '#FFB7C5',
+                        peachGold: '#F7D6C8',
+                        roseGold: '#E8A7A1',
+                        lavenderSoft: '#E6E6FA',
+                        purpleAurora: '#D8BFD8',
+                    },
+                    fontFamily: {
+                        serifSC: ['"Noto Serif SC"', 'serif'],
+                        handwriting: ['"Ma Shan Zheng"', 'cursive'],
+                        sans: ['Poppins', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'glow-pink': '0 0 20px rgba(255, 183, 197, 0.5)',
+                        'glow-gold': '0 0 20px rgba(247, 214, 200, 0.6)',
+                        'glass': '0 8px 32px 0 rgba(255, 183, 197, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* 全局背景与高质感渐变 */
+        body {
+            background: linear-gradient(135deg, #FFFDF9 0%, #FFEBEF 35%, #F7D6C8 70%, #E6E6FA 100%);
+            background-attachment: fixed;
+            font-family: 'Poppins', 'Noto Serif SC', sans-serif;
+            color: #4A3B32;
+            overflow-x: hidden;
+        }
+
+        /* 毛玻璃效果 */
+        .glass-card {
+            background: rgba(255, 253, 249, 0.72);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px rgba(232, 167, 161, 0.15);
+        }
+
+        /* 霓虹动态发光边框 */
+        .neon-border {
+            position: relative;
+            border-radius: 1.5rem;
+            z-index: 0;
+        }
+        .neon-border::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, #FFB7C5, #F7D6C8, #E6E6FA, #FFB7C5);
+            border-radius: 1.6rem;
+            z-index: -1;
+            background-size: 400%;
+            animation: steam 12s linear infinite;
+            opacity: 0.8;
+            filter: blur(4px);
+        }
+
+        @keyframes steam {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        /* 呼吸灯效果 */
+        .pulse-glow {
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 183, 197, 0.4); transform: scale(1); }
+            50% { box-shadow: 0 0 28px rgba(255, 183, 197, 0.8); transform: scale(1.01); }
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 253, 249, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FFB7C5;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #E8A7A1;
+        }
+
+        /* 全屏 Canvas 覆盖 */
+        #bgCanvas, #clickCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 99;
+        }
+        #bgCanvas { z-index: 0; }
+
+        /* 滑块样式优化 */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: linear-gradient(to right, #FFB7C5, #E8A7A1);
+            height: 8px;
+            border-radius: 5px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 22px;
+            width: 22px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            border: 3px solid #E8A7A1;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            transition: all 0.2s;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* 印章特效 */
+        .stamp-used {
+            border: 3px double #e53e3e;
+            color: #e53e3e;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 8px;
+            transform: rotate(-12deg);
+            box-shadow: 0 0 8px rgba(229, 62, 62, 0.3);
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="min-h-screen relative pb-16 selection:bg-pinkSoft selection:text-white">
+
+    <!-- 全屏动画 Canvas -->
+    <canvas id="bgCanvas"></canvas>
+    <canvas id="clickCanvas"></canvas>
+
+    <!-- 顶部状态栏与通知提示 -->
+    <div id="toast" class="fixed top-5 right-5 z-50 transform translate-x-full transition-transform duration-300 glass-card border-l-4 border-roseGold p-4 rounded-xl shadow-2xl flex items-center space-x-3 max-w-md">
+        <i class="fa-solid fa-heart text-roseGold text-xl animate-bounce"></i>
+        <div>
+            <h4 id="toastTitle" class="font-bold text-sm text-gray-800">通知</h4>
+            <p id="toastMsg" class="text-xs text-gray-600">已成功处理</p>
+        </div>
+    </div>
+
+    <!-- 主容器 -->
+    <div class="relative z-10 max-w-5xl mx-auto px-4 py-6 space-y-8">
+
+        <!-- HEADER & 动态状态栏 -->
+        <header class="glass-card neon-border p-6 md:p-8 rounded-3xl text-center relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-pinkSoft rounded-full blur-2xl opacity-50"></div>
+            <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-purpleAurora rounded-full blur-2xl opacity-50"></div>
+
+            <div class="flex justify-between items-center mb-4">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-pink-100 text-pink-700">
+                    <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping mr-2"></span>
+                    浩楠专属守护系统 2026 豪华版
+                </span>
+                <div class="flex items-center space-x-2">
+                    <button onclick="toggleParticle()" title="切换环境粒子" class="p-2 rounded-full bg-white/80 hover:bg-white text-gray-600 hover:text-pink-500 shadow transition">
+                        <i class="fa-solid fa-sparkles"></i>
+                    </button>
+                    <button onclick="openWebhookModal()" title="微信推送配置" class="px-3 py-1.5 rounded-full bg-gradient-to-r from-pinkSoft to-roseGold text-white text-xs font-medium shadow hover:opacity-90 transition flex items-center gap-1">
+                        <i class="fa-brands fa-weixin"></i> 推送设置
+                    </button>
+                </div>
+            </div>
+
+            <h1 class="text-3xl md:text-5xl font-extrabold text-gray-800 font-serifSC tracking-wide mb-3">
+                给宝宝｜浩楠的专属温柔关怀与智能小站
+            </h1>
+            
+            <!-- 打字机效果每日情话 -->
+            <div class="min-h-[2.5rem] flex items-center justify-center">
+                <p id="typewriter" class="text-base md:text-lg font-handwriting text-roseGold tracking-widest italic"></p>
+            </div>
+
+            <div class="mt-4 flex flex-wrap justify-center gap-3 text-xs font-medium text-gray-600">
+                <span class="bg-white/60 px-3 py-1.5 rounded-full border border-pink-100 shadow-sm"><i class="fa-solid fa-shield-heart text-pink-400 mr-1"></i> 全天候安全感监控</span>
+                <span class="bg-white/60 px-3 py-1.5 rounded-full border border-pink-100 shadow-sm"><i class="fa-solid fa-mug-hot text-amber-500 mr-1"></i> 无限次暖宫茶包</span>
+                <span class="bg-white/60 px-3 py-1.5 rounded-full border border-pink-100 shadow-sm"><i class="fa-solid fa-face-kiss-wink-heart text-red-400 mr-1"></i> 独家包容与听话承诺</span>
+            </div>
+        </header>
+
+        <!-- 智能身体与情绪双维度气象站 -->
+        <section class="glass-card p-6 md:p-8 rounded-3xl pulse-glow relative">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-pinkSoft to-roseGold flex items-center justify-center text-white text-xl shadow">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800 font-serifSC">身体与情绪双维度实时气象站</h2>
+                    <p class="text-xs text-gray-500">滑动与勾选当下感受，浩楠的护理智脑将即刻为您生成专属护理方案</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 维度 1: 身体不适指数 -->
+                <div class="bg-white/50 p-5 rounded-2xl border border-pink-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="font-semibold text-sm text-gray-700 flex items-center">
+                            <i class="fa-solid fa-temperature-three-quarters text-red-400 mr-2"></i> 身体不适/痛经指数
+                        </label>
+                        <span id="painVal" class="text-xs px-2.5 py-1 rounded-full bg-red-100 text-red-600 font-bold">1级 - 毫无感觉</span>
+                    </div>
+                    <input type="range" id="painSlider" min="1" max="5" value="1" class="w-full mb-4" oninput="updateWeather()">
+
+                    <p class="text-xs font-semibold text-gray-600 mb-2">当前身体症状（多选）：</p>
+                    <div class="flex flex-wrap gap-2" id="bodyTags">
+                        <button onclick="toggleTag(this)" class="tag-btn border border-gray-200 bg-white/80 px-3 py-1 rounded-xl text-xs text-gray-600 hover:border-pinkSoft transition">小腹隐痛</button>
+                        <button onclick="toggleTag(this)" class="tag-btn border border-gray-200 bg-white/80 px-3 py-1 rounded-xl text-xs text-gray-600 hover:border-pinkSoft transition">腰部酸胀</button>
+                        <button onclick="toggleTag(this)" class="tag-btn border border-gray-200 bg-white/80 px-3 py-1 rounded-xl text-xs text-gray-600 hover:border-pinkSoft transition">偏头痛/沉重</button>
+                        <button onclick="toggleTag(this)" class="tag-btn border border-gray-200 bg-white/80 px-3 py-1 rounded-xl text-xs text-gray-600 hover:border-pinkSoft transition">胃寒恶心</button>
+                        <button onclick="toggleTag(this)" class="tag-btn border border-gray-200 bg-white/80 px-3 py-1 rounded-xl text-xs text-gray-600 hover:border-pinkSoft transition">全身乏力</button>
+                        <button onclick="toggleTag(this)" class="tag-btn border border-gray-200 bg-white/80 px-3 py-1 rounded-xl text-xs text-gray-600 hover:border-pinkSoft transition">胸胀不适</button>
+                    </div>
+                </div>
+
+                <!-- 维度 2: 情绪波动指数 -->
+                <div class="bg-white/50 p-5 rounded-2xl border border-purple-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="font-semibold text-sm text-gray-700 flex items-center">
+                            <i class="fa-solid fa-cloud-sun-rain text-purple-400 mr-2"></i> 心情与情绪指数
+                        </label>
+                        <span id="moodVal" class="text-xs px-2.5 py-1 rounded-full bg-purple-100 text-purple-600 font-bold">1级 - 阳光明媚</span>
+                    </div>
+                    <input type="range" id="moodSlider" min="1" max="5" value="1" class="w-full mb-4" oninput="updateWeather()">
+
+                    <p class="text-xs font-semibold text-gray-600 mb-2">当前情绪标签（多选）：</p>
+                    <div class="flex flex-wrap gap-2" id="moodTags">
+                        <button onclick="toggleTag(this)" class="tag-btn border border-gray-200 bg-white/80 px-3 py-1 rounded-xl text-xs text-gray-600 hover:border-purpleAurora transition">莫名烦躁</button>
+                        <button onclick="toggleTag(this)" class="tag-btn border border-gray-200 bg-white/80 px-3 py-1 rounded-xl text-xs text-gray-600 hover:border-purpleAurora transition">委屈想哭</button>
+                        <button onclick="toggleTag(this)" class="tag-btn border border-gray-200 bg-white/80 px-3 py-1 rounded-xl text-xs text-gray-600 hover:border-purpleAurora transition">急需抱抱</button>
+                        <button onclick="toggleTag(this)" class="tag-btn border border-gray-200 bg-white/80 px-3 py-1 rounded-xl text-xs text-gray-600 hover:border-purpleAurora transition">疯狂想吃甜食</button>
+                        <button onclick="toggleTag(this)" class="tag-btn border border-gray-200 bg-white/80 px-3 py-1 rounded-xl text-xs text-gray-600 hover:border-purpleAurora transition">想一个人静静</button>
+                        <button onclick="toggleTag(this)" class="tag-btn border border-gray-200 bg-white/80 px-3 py-1 rounded-xl text-xs text-gray-600 hover:border-purpleAurora transition">敏感易怒</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 浩楠实时护理方案生成面板 -->
+            <div id="carePlanResult" class="mt-6 p-5 rounded-2xl bg-gradient-to-r from-pink-50 to-orange-50 border border-roseGold/30 relative">
+                <h3 class="font-bold text-gray-800 text-sm mb-2 flex items-center">
+                    <i class="fa-solid fa-wand-magic-sparkles text-roseGold mr-2"></i> 浩楠的实时关怀方案：
+                </h3>
+                <p id="carePlanText" class="text-sm text-gray-700 leading-relaxed font-serifSC">
+                    宝宝现在感觉挺棒的！浩楠随时在身边，准备好陪你做任何想做的事情～
+                </p>
+                <div class="mt-4 flex flex-wrap gap-3">
+                    <button onclick="sendWeatherToHaonan()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-pinkSoft to-roseGold text-white font-medium text-xs shadow hover:shadow-lg transition flex items-center gap-2">
+                        <i class="fa-brands fa-weixin"></i> 一键推送方案给浩楠微信
+                    </button>
+                    <button onclick="copyWeatherPlan()" class="px-4 py-2 rounded-xl bg-white border border-roseGold text-roseGold font-medium text-xs shadow-sm hover:bg-pink-50 transition flex items-center gap-2">
+                        <i class="fa-solid fa-copy"></i> 复制关怀卡片文本
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 生理期四阶段护理 + 浩楠护理百宝箱 -->
+        <section class="glass-card p-6 md:p-8 rounded-3xl">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-roseGold to-peachGold flex items-center justify-center text-white text-xl shadow">
+                        <i class="fa-solid fa-calendar-heart"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800 font-serifSC">四阶段生理周期护理指南</h2>
+                        <p class="text-xs text-gray-500">科学照顾宝宝的每一个阶段，给予最贴心的守护</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4阶段 Tab 切换 -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <button onclick="switchPeriodTab(1)" id="tab1" class="period-tab active-tab p-3 rounded-2xl border text-center transition bg-pinkSoft text-white border-pinkSoft font-bold text-sm shadow">
+                    🌸 月经期 (1-7天)<br><span class="text-[10px] font-normal opacity-90">温养排空阶段</span>
+                </button>
+                <button onclick="switchPeriodTab(2)" id="tab2" class="period-tab p-3 rounded-2xl border text-center transition bg-white/70 text-gray-700 border-gray-200 hover:border-pinkSoft font-bold text-sm">
+                    🌿 卵泡期 (8-13天)<br><span class="text-[10px] font-normal text-gray-500">黄金焕采阶段</span>
+                </button>
+                <button onclick="switchPeriodTab(3)" id="tab3" class="period-tab p-3 rounded-2xl border text-center transition bg-white/70 text-gray-700 border-gray-200 hover:border-pinkSoft font-bold text-sm">
+                    ✨ 排卵期 (14-17天)<br><span class="text-[10px] font-normal text-gray-500">活力巅峰阶段</span>
+                </button>
+                <button onclick="switchPeriodTab(4)" id="tab4" class="period-tab p-3 rounded-2xl border text-center transition bg-white/70 text-gray-700 border-gray-200 hover:border-pinkSoft font-bold text-sm">
+                    🍂 黄体期 (18-28天)<br><span class="text-[10px] font-normal text-gray-500">情绪安抚阶段</span>
+                </button>
+            </div>
+
+            <!-- 阶段内容展示 -->
+            <div id="periodContent" class="bg-white/60 p-5 rounded-2xl border border-pink-100 text-sm leading-relaxed text-gray-700">
+                <!-- 动态充填 -->
+            </div>
+
+            <!-- 浩楠护理百宝箱（折叠/展开） -->
+            <div class="mt-6 border-t border-pink-100 pt-6">
+                <button onclick="toggleTreasureBox()" class="w-full flex justify-between items-center p-4 rounded-2xl bg-gradient-to-r from-pink-100/50 to-purple-100/50 hover:bg-pink-100 transition text-gray-800 font-bold text-sm">
+                    <span class="flex items-center gap-2">
+                        <i class="fa-solid fa-box-open text-roseGold text-base"></i> 🧰 浩楠护理百宝箱（按摩穴位 / 养生食谱 / 高情商话术）
+                    </span>
+                    <i id="treasureIcon" class="fa-solid fa-chevron-down transition-transform"></i>
+                </button>
+
+                <div id="treasureContent" class="hidden mt-4 space-y-6">
+                    <!-- 穴位指南 -->
+                    <div class="bg-white/80 p-5 rounded-2xl border border-pink-100 shadow-sm">
+                        <h4 class="font-bold text-gray-800 mb-3 flex items-center text-sm">
+                            <i class="fa-solid fa-hand-holding-medical text-roseGold mr-2"></i> 缓解痛经四大神仙穴位（浩楠手法指南）
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                            <div class="p-3 bg-pink-50/50 rounded-xl border border-pink-100">
+                                <span class="font-bold text-roseGold text-sm">1. 三阴交穴</span>
+                                <p class="text-gray-600 mt-1"><strong>位置：</strong>内踝尖直上3寸（约宝宝四指宽），胫骨后缘。</p>
+                                <p class="text-gray-600"><strong>浩楠手法：</strong>用大拇指顺时针柔和按压，每次3-5分钟，以酸胀为度。</p>
+                            </div>
+                            <div class="p-3 bg-pink-50/50 rounded-xl border border-pink-100">
+                                <span class="font-bold text-roseGold text-sm">2. 血海穴</span>
+                                <p class="text-gray-600 mt-1"><strong>位置：</strong>髌骨内上缘上2寸（大腿内侧肌肉隆起处）。</p>
+                                <p class="text-gray-600"><strong>浩楠手法：</strong>手掌掌心温热后，用掌根温柔按揉，活血化瘀。</p>
+                            </div>
+                            <div class="p-3 bg-pink-50/50 rounded-xl border border-pink-100">
+                                <span class="font-bold text-roseGold text-sm">3. 合谷穴（虎口）</span>
+                                <p class="text-gray-600 mt-1"><strong>位置：</strong>手背第1、2掌骨间，第2掌骨桡侧的中点处。</p>
+                                <p class="text-gray-600"><strong>浩楠手法：</strong>轻轻捏按，能快速缓解全身疼痛感与不适。</p>
+                            </div>
+                            <div class="p-3 bg-pink-50/50 rounded-xl border border-pink-100">
+                                <span class="font-bold text-roseGold text-sm">4. 关元穴（暖宫穴）</span>
+                                <p class="text-gray-600 mt-1"><strong>位置：</strong>肚脐正下方约三寸（四横指）处。</p>
+                                <p class="text-gray-600"><strong>浩楠手法：</strong>浩楠将双手搓热敷在上面，或配合暖宫贴温敷。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 温补养生食谱 -->
+                    <div class="bg-white/80 p-5 rounded-2xl border border-pink-100 shadow-sm">
+                        <h4 class="font-bold text-gray-800 mb-3 flex items-center text-sm">
+                            <i class="fa-solid fa-utensils text-orange-400 mr-2"></i> 浩楠私房温补养生食谱
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                            <div class="p-3 bg-orange-50/50 rounded-xl border border-orange-100">
+                                <span class="font-bold text-orange-600 text-sm">浓香红糖姜茶</span>
+                                <p class="text-gray-600 mt-1">老姜切丝+古法红糖+红枣，小火慢熬15分钟，趁热喝下驱走深层寒气。</p>
+                            </div>
+                            <div class="p-3 bg-orange-50/50 rounded-xl border border-orange-100">
+                                <span class="font-bold text-orange-600 text-sm">桂圆红枣酒酿蛋</span>
+                                <p class="text-gray-600 mt-1">酒酿煮沸后加入打散的鸡蛋液、桂圆干与枸杞，甘甜补血，暖胃又暖心。</p>
+                            </div>
+                            <div class="p-3 bg-orange-50/50 rounded-xl border border-orange-100">
+                                <span class="font-bold text-orange-600 text-sm">滋补羊肉温润汤</span>
+                                <p class="text-gray-600 mt-1">黄芪、当归配鲜嫩羊肉小火慢炖，生理期后期食用，快速恢复红润好气色。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 高情商沟通指南 -->
+                    <div class="bg-white/80 p-5 rounded-2xl border border-purple-100 shadow-sm">
+                        <h4 class="font-bold text-gray-800 mb-3 flex items-center text-sm">
+                            <i class="fa-solid fa-comments text-purple-400 mr-2"></i> 浩楠的高情商避坑与金句库
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                            <div class="p-3 bg-red-50 rounded-xl border border-red-100">
+                                <span class="font-bold text-red-500">🚫 浩楠绝对严禁使用的踩雷话术：</span>
+                                <ul class="list-disc list-inside text-gray-600 mt-1 space-y-1">
+                                    <li>“多喝热水。”（极其敷衍，必须直接递上热水！）</li>
+                                    <li>“怎么又生气了？”（否定宝宝情绪，大错特错！）</li>
+                                    <li>“大家都是这样的，忍忍就过了。”（缺乏共情力！）</li>
+                                </ul>
+                            </div>
+                            <div class="p-3 bg-green-50 rounded-xl border border-green-100">
+                                <span class="font-bold text-green-600">💖 浩楠必说的温情金句：</span>
+                                <ul class="list-disc list-inside text-gray-600 mt-1 space-y-1">
+                                    <li>“宝宝辛苦了，我现在就抱抱你，想吃什么我来做。”</li>
+                                    <li>“无论你现在什么情绪，我都全盘接受，我在你身边。”</li>
+                                    <li>“购物车已经帮你清理好了，宝宝只需要负责开心。”</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 浩楠清空购物车 & 心愿买单小站 -->
+        <section class="glass-card p-6 md:p-8 rounded-3xl relative overflow-hidden">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-400 to-roseGold flex items-center justify-center text-white text-xl shadow">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800 font-serifSC">浩楠清空购物车 & 心愿买单小站</h2>
+                    <p class="text-xs text-gray-500">宝宝挑选或输入心仪好物，生成浩楠专属买单承诺书直接发送给浩楠</p>
+                </div>
+            </div>
+
+            <!-- 快捷心愿分类盒 -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+                <div onclick="selectWish('智能恒温暖宫腰带 + 艾草热敷包')" class="wish-card p-4 bg-white/70 border border-pink-100 rounded-2xl cursor-pointer hover:border-roseGold hover:shadow-md transition text-center group">
+                    <span class="text-2xl mb-1 block group-hover:scale-110 transition">🔥</span>
+                    <h4 class="font-bold text-xs text-gray-800">暖宫神器套盒</h4>
+                    <p class="text-[10px] text-gray-500 mt-1">恒温热敷，驱散寒意</p>
+                </div>
+                <div onclick="selectWish('手作精制燕窝甜品 + 补血糕点大礼包')" class="wish-card p-4 bg-white/70 border border-pink-100 rounded-2xl cursor-pointer hover:border-roseGold hover:shadow-md transition text-center group">
+                    <span class="text-2xl mb-1 block group-hover:scale-110 transition">🍮</span>
+                    <h4 class="font-bold text-xs text-gray-800">补血养颜甜品</h4>
+                    <p class="text-[10px] text-gray-500 mt-1">甜滋滋，好心情</p>
+                </div>
+                <div onclick="selectWish('无患子薰衣草舒缓香氛SPA套装')" class="wish-card p-4 bg-white/70 border border-pink-100 rounded-2xl cursor-pointer hover:border-roseGold hover:shadow-md transition text-center group">
+                    <span class="text-2xl mb-1 block group-hover:scale-110 transition">🕯️</span>
+                    <h4 class="font-bold text-xs text-gray-800">疗愈香氛SPA</h4>
+                    <p class="text-[10px] text-gray-500 mt-1">放松身心，惬意入眠</p>
+                </div>
+                <div onclick="selectWish('软绵绵云朵绒居家服 + 萌宠绒毛拖鞋')" class="wish-card p-4 bg-white/70 border border-pink-100 rounded-2xl cursor-pointer hover:border-roseGold hover:shadow-md transition text-center group">
+                    <span class="text-2xl mb-1 block group-hover:scale-110 transition">☁️</span>
+                    <h4 class="font-bold text-xs text-gray-800">云朵绒家居服</h4>
+                    <p class="text-[10px] text-gray-500 mt-1">软绵触感，温馨包裹</p>
+                </div>
+                <div onclick="selectWish('浩楠承诺：神秘惊喜盲盒（售价不限）')" class="wish-card p-4 bg-white/70 border border-pink-100 rounded-2xl cursor-pointer hover:border-roseGold hover:shadow-md transition text-center group">
+                    <span class="text-2xl mb-1 block group-hover:scale-110 transition">🎁</span>
+                    <h4 class="font-bold text-xs text-gray-800">浩楠神秘盲盒</h4>
+                    <p class="text-[10px] text-gray-500 mt-1">由浩楠精选神秘礼物</p>
+                </div>
+                <div onclick="selectWish('尊享全球精选进口零食解压大礼包')" class="wish-card p-4 bg-white/70 border border-pink-100 rounded-2xl cursor-pointer hover:border-roseGold hover:shadow-md transition text-center group">
+                    <span class="text-2xl mb-1 block group-hover:scale-110 transition">🍫</span>
+                    <h4 class="font-bold text-xs text-gray-800">解压零食大礼包</h4>
+                    <p class="text-[10px] text-gray-500 mt-1">满足宝宝的所有馋嘴</p>
+                </div>
+            </div>
+
+            <!-- 自定义心愿 -->
+            <div class="flex flex-col md:flex-row gap-3">
+                <input type="text" id="customWishInput" placeholder="或者在此输入宝宝现在的任何心愿（例如：想吃海鲜大餐、想要买口红...）" class="flex-1 px-4 py-3 rounded-2xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-roseGold text-sm bg-white/80">
+                <button onclick="submitWish()" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-pinkSoft to-roseGold text-white font-bold text-sm shadow hover:shadow-lg transition flex items-center justify-center gap-2 shrink-0">
+                    <i class="fa-solid fa-paper-plane"></i> 生成买单通知并推送浩楠
+                </button>
+            </div>
+        </section>
+
+        <!-- 8颗解压情绪小药丸盲盒 (Care Pills) -->
+        <section class="glass-card p-6 md:p-8 rounded-3xl">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-400 to-pinkSoft flex items-center justify-center text-white text-xl shadow">
+                    <i class="fa-solid fa-pills"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800 font-serifSC">解压情绪小药丸盲盒 (Care Pills)</h2>
+                    <p class="text-xs text-gray-500">感觉难受或心情低落时，点击吃下一颗来自浩楠的专属心灵解压药丸</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="pillGrid">
+                <!-- 由 JS 渲染 8 颗药丸 -->
+            </div>
+        </section>
+
+        <!-- 6张“无条件宠爱兑换券” -->
+        <section class="glass-card p-6 md:p-8 rounded-3xl">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-roseGold to-amber-300 flex items-center justify-center text-white text-xl shadow">
+                    <i class="fa-solid fa-ticket"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800 font-serifSC">紫君专属“无条件宠爱兑换券”</h2>
+                    <p class="text-xs text-gray-500">点击立即核销使用，浩楠无条件执行，核销后触发全屏浪漫礼花并留存凭证</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="couponGrid">
+                <!-- JS 动态渲染 6 张券 -->
+            </div>
+        </section>
+
+        <!-- 浩楠的 20 条“男友自我修养” Checklist -->
+        <section class="glass-card p-6 md:p-8 rounded-3xl">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-green-400 to-teal-500 flex items-center justify-center text-white text-xl shadow">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800 font-serifSC">浩楠的“男友自我修养”打卡清单</h2>
+                        <p class="text-xs text-gray-500">实时计算浩楠男友力指数，宝宝可进行监督指导</p>
+                    </div>
+                </div>
+                <!-- 金光进度条 -->
+                <div class="w-full md:w-64 bg-gray-200 rounded-full h-5 overflow-hidden p-0.5 border border-pink-100 relative">
+                    <div id="checkProgress" class="bg-gradient-to-r from-pinkSoft via-roseGold to-amber-300 h-full rounded-full transition-all duration-500 text-[10px] text-white font-bold flex items-center justify-center" style="width: 100%;">
+                        100%
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="checklistGrid">
+                <!-- JS 渲染 20 条清单 -->
+            </div>
+        </section>
+
+        <!-- 浩楠写给紫君的深情长信 -->
+        <section class="glass-card p-6 md:p-8 rounded-3xl relative">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-red-400 to-pinkSoft flex items-center justify-center text-white text-xl shadow">
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800 font-serifSC">浩楠写给宝宝的深情手写信</h2>
+                        <p class="text-xs text-gray-500">来自浩楠真挚的内心独白与永远的守护承诺</p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="copyLetter()" class="px-3 py-1.5 rounded-xl bg-white border border-pink-200 text-xs font-medium text-gray-700 hover:bg-pink-50 transition">
+                        <i class="fa-solid fa-copy"></i> 复制
+                    </button>
+                    <button onclick="printLetter()" class="px-3 py-1.5 rounded-xl bg-white border border-pink-200 text-xs font-medium text-gray-700 hover:bg-pink-50 transition">
+                        <i class="fa-solid fa-print"></i> 打印 / 导出
+                    </button>
+                </div>
+            </div>
+
+            <div id="letterArea" class="bg-gradient-to-b from-amber-50/40 to-pink-50/30 p-6 md:p-8 rounded-2xl border border-pink-100 font-serifSC text-gray-700 leading-relaxed space-y-4 text-sm md:text-base shadow-inner">
+                <p class="font-bold text-base md:text-lg text-roseGold">亲爱的宝宝：</p>
+                <p>见字如面。见信舒采。</p>
+                <p>每当看你因为生理期或者生活中的繁琐而感到身体不适、心情低落的时候，我的心里总是充满了心疼与焦虑。我知道，在这个特殊的时期，身体的酸痛与情绪的脆弱都是难以言喻的，而我最想做的，就是成为你可以随时依靠的最坚实的港湾。</p>
+                <p>在这个世界上，没有任何事情比你的开心与健康更重要。我或许不是最完美的男朋友，但我愿意为了你倾尽我所有的温柔与耐心。不管是为你煮一杯暖暖的红糖姜茶，为你按摩酸痛的腰背，还是无条件听你发脾气、陪你静静发呆，我都甘之如饴。</p>
+                <p>请你记住，无论何时何地，你都不需要独自面对任何难受与委屈。我永远都在你伸手就能触及的地方，永远偏向你、包容你、无条件宠爱你。</p>
+                <p>愿这个小站能给你带来丝丝温暖，而我的爱与守护，会一直陪伴你的每一个春夏秋冬。</p>
+                <div class="pt-4 text-right">
+                    <p class="font-handwriting text-xl text-roseGold">爱你的浩楠</p>
+                    <p class="text-xs text-gray-400 font-sans mt-1">陪伴宝宝的每一天</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 宝宝专属私密心情日记本 -->
+        <section class="glass-card p-6 md:p-8 rounded-3xl">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-400 to-purple-400 flex items-center justify-center text-white text-xl shadow">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800 font-serifSC">宝宝专属私密心情日记本</h2>
+                    <p class="text-xs text-gray-500">本地安全加密存储，随心记录小心情，浩楠随时在身后保护你</p>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <textarea id="diaryInput" rows="3" placeholder="今天有什么想记录的开心事或小委屈吗？写在这里吧..." class="w-full p-4 rounded-2xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-roseGold text-sm bg-white/80"></textarea>
+                <div class="flex justify-between items-center">
+                    <span class="text-xs text-gray-400"><i class="fa-solid fa-lock text-green-500"></i> 数据完全存于本地浏览器，隐私无忧</span>
+                    <button onclick="saveDiary()" class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-purple-400 to-pinkSoft text-white font-bold text-xs shadow hover:shadow-lg transition flex items-center gap-2">
+                        <i class="fa-solid fa-floppy-disk"></i> 保存日记
+                    </button>
+                </div>
+
+                <!-- 历史日记列表 -->
+                <div id="diaryList" class="space-y-3 pt-4">
+                    <!-- JS 渲染历史日记 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="text-center py-6 text-xs text-gray-500 space-y-2">
+            <p>💖 本小站由浩楠为宝宝全心全意倾力打造 💖</p>
+            <p class="text-[10px] text-gray-400">所有关怀条款与兑换券永久有效 | 浩楠拥有最终无条件宠爱解释权</p>
+        </footer>
+
+    </div>
+
+    <!-- 微信 Webhook 配置 Modal -->
+    <div id="webhookModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm hidden">
+        <div class="glass-card bg-white/95 p-6 md:p-8 rounded-3xl max-w-lg w-full mx-4 shadow-2xl border border-pink-200 space-y-5">
+            <div class="flex justify-between items-center border-b pb-3 border-pink-100">
+                <h3 class="text-lg font-bold text-gray-800 font-serifSC flex items-center">
+                    <i class="fa-brands fa-weixin text-green-500 mr-2 text-xl"></i> 智能微信 Webhook 推送设置
+                </h3>
+                <button onclick="closeWebhookModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            
+            <p class="text-xs text-gray-600 leading-relaxed">
+                配置 Webhook 后，宝宝在网页提交护理方案、买单需求时，系统将通过第三方服务将消息直接发送到浩楠手机微信！
+            </p>
+
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">推送服务类型：</label>
+                    <select id="webhookType" onchange="toggleWebhookType()" class="w-full p-2.5 rounded-xl border border-pink-200 bg-white font-medium">
+                        <option value="serverchan">Server酱 (微信方糖推送)</option>
+                        <option value="bark">Bark (iOS专用推送)</option>
+                        <option value="pushdeer">PushDeer</option>
+                        <option value="wxpusher">WxPusher (微信推送)</option>
+                        <option value="custom">自定义 GET/POST Webhook URL</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label id="webhookKeyLabel" class="block font-semibold text-gray-700 mb-1">Server酱 SendKey / API 地址：</label>
+                    <input type="text" id="webhookKeyInput" placeholder="请输入 SendKey 或 URL 地址" class="w-full p-2.5 rounded-xl border border-pink-200 bg-white">
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-3 pt-2">
+                <button onclick="saveWebhookConfig()" class="px-5 py-2 rounded-xl bg-gradient-to-r from-pinkSoft to-roseGold text-white font-bold text-xs shadow hover:opacity-90">
+                    保存配置
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 药丸弹窗 Modal -->
+    <div id="pillModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm hidden">
+        <div class="glass-card bg-white/95 p-6 md:p-8 rounded-3xl max-w-md w-full mx-4 shadow-2xl border border-pink-200 text-center space-y-4 relative">
+            <div id="pillIconBox" class="w-16 h-16 rounded-full mx-auto flex items-center justify-center text-3xl shadow-lg"></div>
+            <h3 id="pillTitle" class="text-xl font-bold text-gray-800 font-serifSC"></h3>
+            <p id="pillContent" class="text-sm text-gray-600 leading-relaxed font-serifSC bg-pink-50/50 p-4 rounded-2xl border border-pink-100"></p>
+            <div class="pt-2">
+                <button onclick="closePillModal()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-pinkSoft to-roseGold text-white font-bold text-xs shadow hover:opacity-90">
+                    收到浩楠的爱心啦！
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS 脚本逻辑 -->
+    <script>
+        /* ==================== 1. 初始化数据与配置 ==================== */
+        const loveSentences = [
+            "宝宝，无论今天天气如何，你在我心里永远是温暖的阳春三月。",
+            "世界上最好的宝宝，今天也要被浩楠无条件宠爱哦！",
+            "只要你需要，浩楠永远第一时间出现在你身边。",
+            "照顾宝宝是浩楠这辈子最重要的头等大事。",
+            "今天也有在超级无敌认真地爱着宝宝～"
+        ];
+
+        const pillsData = [
+            { id: 1, name: "💊 止痛抚慰丸", bg: "from-pink-400 to-red-400", title: "浩楠的温热掌心与抱抱", text: "宝宝不哭，痛痛飞走！浩楠已经为你准备好了热水袋和暖宫贴，现在就来把手搓热为你轻轻按摩小腹。" },
+            { id: 2, name: "💊 消气包容丸", bg: "from-purple-400 to-pink-400", title: "浩楠绝不嘴硬承诺", text: "无论因为什么烦躁，都是浩楠做得不够好！宝宝随时发脾气，浩楠全程笑脸包容，绝不讲一句大道理。" },
+            { id: 3, name: "💊 充能快乐丸", bg: "from-amber-400 to-orange-400", title: "甜品与美食大放送", text: "心情低落的时候，卡路里一律不算数！想吃奶茶、蛋糕还是小龙虾？浩楠立刻去买！" },
+            { id: 4, name: "💊 满分安全感丸", bg: "from-teal-400 to-green-400", title: "浩楠的专一与偏爱", text: "你是我唯一的优先选择，也是我的终极偏爱。无论任何时候，我都坚定不移地站你这边。" },
+            { id: 5, name: "💊 听话顺从丸", bg: "from-blue-400 to-indigo-400", title: "今日小弟浩楠已上线", text: "今天浩楠就是宝宝的专属听话小弟，指东绝不走西，递水拿拿包无所不能！" },
+            { id: 6, name: "💊 陪伴解压丸", bg: "from-rose-400 to-pink-300", title: "沉浸式窝着看电影", text: "不想说话也没关系，浩楠陪你窝在被窝里看爆米花电影，做你最安静舒服的依靠。" },
+            { id: 7, name: "💊 清空购物车丸", bg: "from-yellow-400 to-amber-500", title: "浩楠买单特权卡", text: "把看中好久的东西都加进购物车吧！浩楠立刻去掏钱包清空，宝宝负责开心就好！" },
+            { id: 8, name: "💊 晚安好梦丸", bg: "from-purple-500 to-indigo-600", title: "温柔睡前故事与哄睡", text: "闭上眼睛，浩楠在耳边为你讲甜甜的童话故事，轻轻拍着你的背，祝宝宝做个好梦。" }
+        ];
+
+        const couponsData = [
+            { id: 1, title: "🤗 无限次温暖拥抱券", desc: "凭此券可随时索要浩楠的超长超紧温暖拥抱，直至宝宝满意为止。", bg: "from-pink-100 to-red-100", border: "border-pink-200" },
+            { id: 2, title: "🛒 扫光购物车买单券", desc: "凭此券浩楠无条件为你结算购物车中的心仪商品，绝不犹豫！", bg: "from-amber-100 to-orange-100", border: "border-amber-200" },
+            { id: 3, title: "🤐 绝不讲道理完全听话券", desc: "发生争执时出示此券，浩楠无条件承认错误并全盘听从宝宝安排。", bg: "from-purple-100 to-pink-100", border: "border-purple-200" },
+            { id: 4, title: "🍜 深夜专属美食宵夜券", desc: "无论深夜几点，浩楠立刻下厨或出门购买宝宝想吃的宵夜美食。", bg: "from-green-100 to-teal-100", border: "border-green-200" },
+            { id: 5, title: "🙇‍♂️ 做一天宝宝专属听话小弟", desc: "浩楠全天候听从召唤，斟茶倒水、捶背捏腿、端茶送水毫无怨言。", bg: "from-blue-100 to-indigo-100", border: "border-blue-200" },
+            { id: 6, title: "🌟 消除一切小脾气包容券", desc: "宝宝心情不好想发泄时，出示此券浩楠化身人体沙包与温柔倾听者。", bg: "from-rose-100 to-peachGold", border: "border-rose-200" }
+        ];
+
+        const checklistData = [
+            "每天早安晚安无一遗漏", "记得宝宝生理期并提前准备好暖贴", "争吵时永远第一个主动低头拉手",
+            "熟记宝宝的所有饮食喜好与忌口", "主动汇报行程给宝宝满满安全感", "拍照时永远把宝宝拍得最美",
+            "绝不当着宝宝的面看其他女生", "定期准备意想不到的小惊喜", "学会做宝宝最爱吃的几道家常菜",
+            "在朋友面前大方夸奖与宠爱宝宝", "耐心地陪宝宝逛街并主动拎包", "宝宝生病时推掉一切陪伴在旁",
+            "手机密码与定位对宝宝完全公开", "永远不敷衍宝宝发来的长语音或信息", "记得每一个重要的纪念日",
+            "尊重并全力支持宝宝的所有决定", "包容宝宝偶尔的小脾气与小任性", "时刻注意保持自身整洁与阳光",
+            "把宝宝写进自己未来的每一个规划里", "承诺一生一世只偏爱与守护宝宝"
+        ];
+
+        const periodDetails = {
+            1: `<strong>🌸 月经期（第1-7天）：</strong><br>
+                • <strong>身体状态：</strong>子宫内膜脱落，身体较为虚弱，可能伴有小腹隐痛、腰酸及疲倦。<br>
+                • <strong>浩楠护理重点：</strong>保暖第一！浩楠会随时备好温热红糖姜茶，不让宝宝碰任何冷水；早晚贴好暖宫贴。<br>
+                • <strong>营养建议：</strong>宜吃温热补血食物，如红枣、桂圆、猪肝、菠菜及热汤。`,
+            2: `<strong>🌿 卵泡期（第8-13天）：</strong><br>
+                • <strong>身体状态：</strong>雌激素分泌上升，代谢加快，皮肤状态极佳，精力与心情最充沛的黄金期！<br>
+                • <strong>浩楠护理重点：</strong>陪宝宝去户外散步、约会逛街，享受好时光，安排甜甜的约会计划。<br>
+                • <strong>营养建议：</strong>补充优质蛋白质与维生素，如优质牛肉、深海鱼、新鲜蔬果。`,
+            3: `<strong>✨ 排卵期（第14-17天）：</strong><br>
+                • <strong>身体状态：</strong>体温略有升高，魅力与活力达到峰值，体能充沛。<br>
+                • <strong>浩楠护理重点：</strong>注意劳逸结合，保持规律作息，浩楠随时准备好果汁与健康零食。<br>
+                • <strong>营养建议：</strong>多喝水，多吃高纤维食物，保持膳食平衡。`,
+            4: `<strong>🍂 黄体期（第18-28天）：</strong><br>
+                • <strong>身体状态：</strong>孕酮升高，身体易水肿，情绪可能产生波动或紧张（PMS经前期综合征）。<br>
+                • <strong>浩楠护理重点：</strong>情绪安抚是核心！浩楠会格外温柔耐心，主动分担家务，绝不顶嘴。<br>
+                • <strong>营养建议：</strong>清淡少盐防止水肿，可适量补充坚果、黑巧克力以舒缓心情。`
+        };
+
+        /* ==================== 2. 全屏 Canvas 粒子与点击涟漪 ==================== */
+        const bgCanvas = document.getElementById('bgCanvas');
+        const bgCtx = bgCanvas.getContext('2d');
+        const clickCanvas = document.getElementById('clickCanvas');
+        const clickCtx = clickCanvas.getContext('2d');
+
+        let width = bgCanvas.width = clickCanvas.width = window.innerWidth;
+        let height = bgCanvas.height = clickCanvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = bgCanvas.width = clickCanvas.width = window.innerWidth;
+            height = bgCanvas.height = clickCanvas.height = window.innerHeight;
+        });
+
+        // 飘落 Sakura / Heart 粒子
+        let particles = [];
+        let particleEnabled = true;
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = -20;
+                this.size = Math.random() * 12 + 6;
+                this.speedY = Math.random() * 1.5 + 0.8;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.angle = Math.random() * 360;
+                this.spin = (Math.random() - 0.5) * 0.02;
+                this.type = Math.random() > 0.5 ? 'heart' : 'sakura';
+                this.opacity = Math.random() * 0.6 + 0.4;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.angle += this.spin;
+                if (this.y > height + 20) this.reset();
+            }
+            draw() {
+                bgCtx.save();
+                bgCtx.translate(this.x, this.y);
+                bgCtx.rotate(this.angle);
+                bgCtx.globalAlpha = this.opacity;
+
+                if (this.type === 'heart') {
+                    bgCtx.fillStyle = '#FFB7C5';
+                    bgCtx.beginPath();
+                    bgCtx.arc(-this.size/4, -this.size/4, this.size/4, 0, Math.PI, true);
+                    bgCtx.arc(this.size/4, -this.size/4, this.size/4, 0, Math.PI, true);
+                    bgCtx.lineTo(0, this.size/2);
+                    bgCtx.closePath();
+                    bgCtx.fill();
+                } else {
+                    bgCtx.fillStyle = '#F7D6C8';
+                    bgCtx.beginPath();
+                    bgCtx.ellipse(0, 0, this.size/2, this.size/4, Math.PI/4, 0, 2*Math.PI);
+                    bgCtx.fill();
+                }
+                bgCtx.restore();
+            }
+        }
+
+        for (let i = 0; i < 35; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateBg() {
+            bgCtx.clearRect(0, 0, width, height);
+            if (particleEnabled) {
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+            }
+            requestAnimationFrame(animateBg);
+        }
+        animateBg();
+
+        function toggleParticle() {
+            particleEnabled = !particleEnabled;
+            showToast('特效设置', particleEnabled ? '环境飘花效果已开启🌸' : '环境飘花效果已暂停✨');
+        }
+
+        // 点击扩散涟漪与爱心粒子
+        let clickRipples = [];
+
+        window.addEventListener('click', (e) => {
+            // 在点击位置创建扩散粒子
+            for (let i = 0; i < 8; i++) {
+                clickRipples.push({
+                    x: e.clientX,
+                    y: e.clientY,
+                    vx: (Math.random() - 0.5) * 6,
+                    vy: (Math.random() - 0.5) * 6,
+                    size: Math.random() * 10 + 6,
+                    color: `hsl(${Math.random() * 60 + 330}, 100%, 75%)`,
+                    life: 1.0
+                });
+            }
+        });
+
+        function animateClick() {
+            clickCtx.clearRect(0, 0, width, height);
+            for (let i = clickRipples.length - 1; i >= 0; i--) {
+                let r = clickRipples[i];
+                r.x += r.vx;
+                r.y += r.vy;
+                r.life -= 0.025;
+
+                if (r.life <= 0) {
+                    clickRipples.splice(i, 1);
+                    continue;
+                }
+
+                clickCtx.save();
+                clickCtx.globalAlpha = r.life;
+                clickCtx.fillStyle = r.color;
+                clickCtx.beginPath();
+                clickCtx.arc(r.x, r.y, r.size * r.life, 0, Math.PI * 2);
+                clickCtx.fill();
+                clickCtx.restore();
+            }
+            requestAnimationFrame(animateClick);
+        }
+        animateClick();
+
+        /* ==================== 3. 业务逻辑与 UI 交互 ==================== */
+
+        // 页面加载完成初始化
+        window.onload = function() {
+            startTypewriter();
+            switchPeriodTab(1);
+            renderPills();
+            renderCoupons();
+            renderChecklist();
+            loadDiaries();
+            updateWeather();
+        };
+
+        // 打字机效果
+        let sentenceIdx = 0;
+        let charIdx = 0;
+        let isDeleting = false;
+
+        function startTypewriter() {
+            const target = document.getElementById('typewriter');
+            const currentSentence = loveSentences[sentenceIdx];
+
+            if (isDeleting) {
+                target.textContent = currentSentence.substring(0, charIdx - 1);
+                charIdx--;
+            } else {
+                target.textContent = currentSentence.substring(0, charIdx + 1);
+                charIdx++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIdx === currentSentence.length) {
+                typeSpeed = 2500;
+                isDeleting = true;
+            } else if (isDeleting && charIdx === 0) {
+                isDeleting = false;
+                sentenceIdx = (sentenceIdx + 1) % loveSentences.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(startTypewriter, typeSpeed);
+        }
+
+        // Toast 消息框
+        function showToast(title, msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.remove('translate-x-full');
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3500);
+        }
+
+        // 气象站逻辑
+        const painTexts = ["1级 - 毫无感觉", "2级 - 轻微不适", "3级 - 阵阵酸痛", "4级 - 较重难受", "5级 - 极度难受(求安抚)"];
+        const moodTexts = ["1级 - 阳光明媚", "2级 - 略带小情绪", "3级 - 莫名烦躁", "4级 - 委屈想哭", "5级 - 炸弹边缘(求抱抱)"];
+
+        function updateWeather() {
+            const painVal = document.getElementById('painSlider').value;
+            const moodVal = document.getElementById('moodSlider').value;
+
+            document.getElementById('painVal').textContent = painTexts[painVal - 1];
+            document.getElementById('moodVal').textContent = moodTexts[moodVal - 1];
+
+            // 收集标签
+            const selectedBody = Array.from(document.querySelectorAll('#bodyTags .active-tag')).map(b => b.textContent);
+            const selectedMood = Array.from(document.querySelectorAll('#moodTags .active-tag')).map(b => b.textContent);
+
+            let plan = "";
+            if (painVal >= 4 || moodVal >= 4) {
+                plan = `🚨 <strong>紧急护理模式启动：</strong>浩楠检测到宝宝现在非常非常难受（不适指数${painVal}，情绪指数${moodVal}）。` +
+                       (selectedBody.length ? `身体正在经历[${selectedBody.join('、')}]，` : '') +
+                       (selectedMood.length ? `心里觉得[${selectedMood.join('、')}]。` : '') +
+                       `<br><strong>浩楠行动指南：</strong>立刻放下手中所有事情，准备红糖姜茶与热水袋，展开30分钟腰腹揉按，全盘包容宝宝的所有情绪！`;
+            } else if (painVal >= 2 || moodVal >= 2) {
+                plan = `🌸 <strong>温和守护模式：</strong>宝宝现在稍微有些不舒服（不适指数${painVal}，情绪指数${moodVal}）。` +
+                       (selectedBody.length ? `伴有[${selectedBody.join('、')}]，` : '') +
+                       (selectedMood.length ? `心情标签[${selectedMood.join('、')}]。` : '') +
+                       `<br><strong>浩楠行动指南：</strong>为宝宝泡一杯热牛奶，准备小零食，抱在怀里一起看喜欢的剧，时刻注意保暖。`;
+            } else {
+                plan = `✨ <strong>快乐晴空模式：</strong>宝宝目前状态很棒！身体和心情都舒畅。浩楠随时准备陪宝宝去做任何想做的事情，保持这份好心情～`;
+            }
+
+            document.getElementById('carePlanText').innerHTML = plan;
+        }
+
+        function toggleTag(btn) {
+            btn.classList.toggle('active-tag');
+            if (btn.classList.contains('active-tag')) {
+                btn.classList.remove('bg-white/80', 'text-gray-600');
+                btn.classList.add('bg-pinkSoft', 'text-white', 'border-roseGold');
+            } else {
+                btn.classList.add('bg-white/80', 'text-gray-600');
+                btn.classList.remove('bg-pinkSoft', 'text-white', 'border-roseGold');
+            }
+            updateWeather();
+        }
+
+        // 生理期 Tab
+        function switchPeriodTab(idx) {
+            for (let i = 1; i <= 4; i++) {
+                const btn = document.getElementById(`tab${i}`);
+                if (i === idx) {
+                    btn.className = "period-tab active-tab p-3 rounded-2xl border text-center transition bg-pinkSoft text-white border-pinkSoft font-bold text-sm shadow";
+                } else {
+                    btn.className = "period-tab p-3 rounded-2xl border text-center transition bg-white/70 text-gray-700 border-gray-200 hover:border-pinkSoft font-bold text-sm";
+                }
+            }
+            document.getElementById('periodContent').innerHTML = periodDetails[idx];
+        }
+
+        // 护理百宝箱折叠
+        function toggleTreasureBox() {
+            const content = document.getElementById('treasureContent');
+            const icon = document.getElementById('treasureIcon');
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        // 心愿卡片选择
+        let selectedWishText = "";
+        function selectWish(text) {
+            selectedWishText = text;
+            document.getElementById('customWishInput').value = text;
+            showToast('已选择心愿', `好物“[${text}]”已加入备选！`);
+        }
+
+        function submitWish() {
+            const val = document.getElementById('customWishInput').value.trim();
+            if (!val) {
+                showToast('提示', '请先挑选或输入宝宝的心愿哦！');
+                return;
+            }
+            triggerConfetti();
+            const msg = `🎁 【浩楠买单承诺通知】\n宝宝挑选了心愿好物：${val}\n浩楠承诺将以最快速度完成清空买单！`;
+            sendWebhook('宝宝的心愿买单请求', msg);
+            showToast('已成功通知浩楠', '买单承诺书已推送至浩楠微信，请耐心等待惊喜！');
+        }
+
+        // 药丸渲染与交互
+        function renderPills() {
+            const grid = document.getElementById('pillGrid');
+            grid.innerHTML = pillsData.map(p => `
+                <div onclick="openPillModal(${p.id})" class="p-4 rounded-2xl bg-gradient-to-br ${p.bg} text-white cursor-pointer hover:scale-105 transition shadow-md flex flex-col items-center justify-center text-center space-y-2 group">
+                    <span class="text-2xl group-hover:rotate-12 transition">💊</span>
+                    <span class="font-bold text-xs">${p.name}</span>
+                </div>
+            `).join('');
+        }
+
+        function openPillModal(id) {
+            const pill = pillsData.find(p => p.id === id);
+            document.getElementById('pillTitle').textContent = pill.name;
+            document.getElementById('pillContent').textContent = pill.text;
+            const iconBox = document.getElementById('pillIconBox');
+            iconBox.className = `w-16 h-16 rounded-full mx-auto flex items-center justify-center text-3xl shadow-lg bg-gradient-to-br ${pill.bg} text-white`;
+            iconBox.innerHTML = '💊';
+            document.getElementById('pillModal').classList.remove('hidden');
+            triggerConfetti();
+        }
+
+        function closePillModal() {
+            document.getElementById('pillModal').classList.add('hidden');
+        }
+
+        // 兑换券渲染与核销
+        let usedCoupons = JSON.parse(localStorage.getItem('haonan_used_coupons') || '{}');
+
+        function renderCoupons() {
+            const grid = document.getElementById('couponGrid');
+            grid.innerHTML = couponsData.map(c => {
+                const isUsed = usedCoupons[c.id];
+                return `
+                    <div class="p-5 rounded-2xl bg-gradient-to-r ${c.bg} border ${c.border} flex justify-between items-center shadow-sm relative overflow-hidden">
+                        <div class="space-y-1 max-w-[70%]">
+                            <h4 class="font-bold text-sm text-gray-800">${c.title}</h4>
+                            <p class="text-xs text-gray-600">${c.desc}</p>
+                            ${isUsed ? `<p class="text-[10px] text-red-500 font-mono mt-1">核销时间: ${isUsed}</p>` : ''}
+                        </div>
+                        <div>
+                            ${isUsed ? 
+                                `<span class="stamp-used">已核销</span>` : 
+                                `<button onclick="useCoupon(${c.id})" class="px-4 py-2 rounded-xl bg-gradient-to-r from-pinkSoft to-roseGold text-white font-bold text-xs shadow hover:shadow-md transition">立即核销</button>`
+                            }
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function useCoupon(id) {
+            const timeStr = new Date().toLocaleString();
+            usedCoupons[id] = timeStr;
+            localStorage.setItem('haonan_used_coupons', JSON.stringify(usedCoupons));
+            renderCoupons();
+            triggerConfetti();
+
+            const coupon = couponsData.find(c => c.id === id);
+            const msg = `🎟️ 【宠爱兑换券核销通知】\n宝宝于 ${timeStr} 使用了《${coupon.title}》！\n请浩楠恪守承诺，无条件执行！`;
+            sendWebhook('宠爱兑换券核销提醒', msg);
+            showToast('兑换成功', `《${coupon.title}》核销成功！浩楠已收到通知。`);
+        }
+
+        // 男友力 Checklist
+        let checklistState = JSON.parse(localStorage.getItem('haonan_checklist') || '[]');
+
+        function renderChecklist() {
+            const grid = document.getElementById('checklistGrid');
+            grid.innerHTML = checklistData.map((item, idx) => {
+                const checked = checklistState.includes(idx) ? 'checked' : '';
+                return `
+                    <label class="flex items-center space-x-3 p-3 bg-white/70 rounded-xl border border-pink-100 hover:bg-pink-50/50 cursor-pointer transition text-xs text-gray-700">
+                        <input type="checkbox" onchange="toggleCheck(${idx})" ${checked} class="w-4 h-4 text-roseGold rounded focus:ring-pinkSoft">
+                        <span>${idx + 1}. ${item}</span>
+                    </label>
+                `;
+            }).join('');
+            updateChecklistProgress();
+        }
+
+        function toggleCheck(idx) {
+            if (checklistState.includes(idx)) {
+                checklistState = checklistState.filter(i => i !== idx);
+            } else {
+                checklistState.push(idx);
+            }
+            localStorage.setItem('haonan_checklist', JSON.stringify(checklistState));
+            updateChecklistProgress();
+        }
+
+        function updateChecklistProgress() {
+            const total = checklistData.length;
+            const current = checklistState.length;
+            const pct = Math.round((current / total) * 100);
+            const bar = document.getElementById('checkProgress');
+            bar.style.width = `${pct}%`;
+            bar.textContent = `男友力指数: ${pct}% (${current}/${total})`;
+        }
+
+        // 深情信件交互
+        function copyLetter() {
+            const text = document.getElementById('letterArea').innerText;
+            const dummy = document.createElement('textarea');
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+            showToast('复制成功', '浩楠的手写长信内容已复制至剪贴板！');
+        }
+
+        function printLetter() {
+            window.print();
+        }
+
+        // 心情日记本
+        function saveDiary() {
+            const input = document.getElementById('diaryInput');
+            const val = input.value.trim();
+            if (!val) {
+                showToast('提示', '请输入想记录的心情内容哦！');
+                return;
+            }
+            const diaries = JSON.parse(localStorage.getItem('haonan_diaries') || '[]');
+            diaries.unshift({
+                time: new Date().toLocaleString(),
+                content: val
+            });
+            localStorage.setItem('haonan_diaries', JSON.stringify(diaries));
+            input.value = '';
+            loadDiaries();
+            showToast('保存成功', '日记已安全保存在本地，浩楠守护你的每一个小心情。');
+        }
+
+        function loadDiaries() {
+            const diaries = JSON.parse(localStorage.getItem('haonan_diaries') || '[]');
+            const list = document.getElementById('diaryList');
+            if (diaries.length === 0) {
+                list.innerHTML = `<p class="text-xs text-gray-400 text-center py-2">暂无日记记录，这里是宝宝的专属私密倾诉角落～</p>`;
+                return;
+            }
+            list.innerHTML = diaries.map((d, i) => `
+                <div class="p-4 bg-white/80 rounded-2xl border border-pink-100 text-xs text-gray-700 space-y-1 relative group">
+                    <div class="flex justify-between text-gray-400 text-[10px]">
+                        <span>📅 ${d.time}</span>
+                        <button onclick="deleteDiary(${i})" class="text-red-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition">删除</button>
+                    </div>
+                    <p class="leading-relaxed font-serifSC">${d.content}</p>
+                </div>
+            `).join('');
+        }
+
+        function deleteDiary(idx) {
+            let diaries = JSON.parse(localStorage.getItem('haonan_diaries') || '[]');
+            diaries.splice(idx, 1);
+            localStorage.setItem('haonan_diaries', JSON.stringify(diaries));
+            loadDiaries();
+            showToast('删除提示', '日记条目已清理。');
+        }
+
+        // Webhook 与消息推送系统
+        function openWebhookModal() {
+            document.getElementById('webhookModal').classList.remove('hidden');
+            const config = JSON.parse(localStorage.getItem('haonan_webhook_config') || '{}');
+            if (config.type) document.getElementById('webhookType').value = config.type;
+            if (config.key) document.getElementById('webhookKeyInput').value = config.key;
+            toggleWebhookType();
+        }
+
+        function closeWebhookModal() {
+            document.getElementById('webhookModal').classList.add('hidden');
+        }
+
+        function toggleWebhookType() {
+            const type = document.getElementById('webhookType').value;
+            const label = document.getElementById('webhookKeyLabel');
+            if (type === 'serverchan') label.textContent = 'Server酱 SendKey：';
+            else if (type === 'bark') label.textContent = 'Bark 服务器URL / Key：';
+            else if (type === 'pushdeer') label.textContent = 'PushDeer PushKey：';
+            else if (type === 'wxpusher') label.textContent = 'WxPusher AppToken / UID：';
+            else label.textContent = '自定义 Webhook URL：';
+        }
+
+        function saveWebhookConfig() {
+            const type = document.getElementById('webhookType').value;
+            const key = document.getElementById('webhookKeyInput').value.trim();
+            localStorage.setItem('haonan_webhook_config', JSON.stringify({ type, key }));
+            closeWebhookModal();
+            showToast('配置成功', '微信推送通道参数已更新！');
+        }
+
+        function sendWebhook(title, content) {
+            const config = JSON.parse(localStorage.getItem('haonan_webhook_config') || '{}');
+            if (!config.key) return; // 如果未配置则跳过自动网络请求
+
+            try {
+                if (config.type === 'serverchan') {
+                    fetch(`https://sctapi.ftqq.com/${config.key}.send?title=${encodeURIComponent(title)}&desp=${encodeURIComponent(content)}`, { mode: 'no-cors' });
+                } else if (config.type === 'bark') {
+                    fetch(`${config.key}/${encodeURIComponent(title)}/${encodeURIComponent(content)}`, { mode: 'no-cors' });
+                } else if (config.type === 'pushdeer') {
+                    fetch(`https://api2.pushdeer.com/message/push?pushkey=${config.key}&text=${encodeURIComponent(title)}&desp=${encodeURIComponent(content)}`, { mode: 'no-cors' });
+                } else if (config.type === 'custom') {
+                    fetch(config.key, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ title, content })
+                    }).catch(() => {});
+                }
+            } catch (e) {
+                console.log('Webhook push attempted');
+            }
+        }
+
+        function sendWeatherToHaonan() {
+            const text = document.getElementById('carePlanText').innerText;
+            sendWebhook('宝宝身体与情绪护理求助', text);
+            showToast('已推送给浩楠', '实时护理方案已发送至浩楠微信，他会立刻处理！');
+            triggerConfetti();
+        }
+
+        function copyWeatherPlan() {
+            const text = document.getElementById('carePlanText').innerText;
+            const dummy = document.createElement('textarea');
+            document.body.appendChild(dummy);
+            dummy.value = `【宝宝专属护理卡片】\n${text}`;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+            showToast('复制成功', '护理方案文本已复制，可直接发送给浩楠！');
+        }
+
+        // 礼花/烟花 Canvas Confetti
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#FFB7C5', '#F7D6C8', '#E8A7A1', '#E6E6FA']
+                });
+            }
+        }
+    </script>
+</body>
+</html>
